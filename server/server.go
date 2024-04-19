@@ -10,13 +10,14 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-// Payload represents the data structure sent to the websocket endpoint.
+// Payload represents the data structure sent to the websocket endpoint
 type Payload struct {
 	Message string                 `json:"message"`
 	Headers map[string]interface{} `json:"HEADERS"`
 }
 
-// ChatMessageTemplate represents the data structure for the chat-message.html.tmpl template.
+// ChatMessageTemplate represents the data structure for the
+// chat-message.html.tmpl template
 type ChatMessageTemplate struct {
 	Message     string
 	MessageIcon string
@@ -29,23 +30,26 @@ var upgrader = websocket.Upgrader{
 	CheckOrigin:     func(r *http.Request) bool { return true },
 }
 
-// processMessage takes in the message sent to the websocket and returns a reply
+// processMessage takes in the message sent to the websocket and
+// returns a reply
 func processMessage(question string) string {
 	// echo the question in reverse
 	chars := []rune(question)
 	for i, j := 0, len(chars)-1; i < j; i, j = i+1, j-1 {
 		chars[i], chars[j] = chars[j], chars[i]
 	}
+
 	return string(chars)
 }
 
-// HandleWebSocket handles the request for the web-socket endpoint.
+// HandleWebSocket handles the request for the web-socket endpoint
 func HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 	// upgrade the connection to a WebSocket connection
 	ws, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
 		log.Println(err)
 	}
+
 	log.Println("Websocket Client Connected")
 
 	for {
@@ -58,13 +62,20 @@ func HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 		// Parse payload
 		var dat Payload
-		if err := json.Unmarshal(p, &dat); err != nil {
+		err = json.Unmarshal(p, &dat)
+		if err != nil {
 			log.Println(err)
 			return
 		}
 
 		// Load template for repsonses
-		chatMessageTemplate := template.Must(template.ParseFiles("server/templates/chat-message.html.tmpl"))
+		chatMessageTemplate, err := template.ParseFiles(
+			"server/templates/chat-message.html.tmpl",
+		)
+		if err != nil {
+			log.Println(err)
+			return
+		}
 
 		// Render question to message list
 		var questionBuffer bytes.Buffer
