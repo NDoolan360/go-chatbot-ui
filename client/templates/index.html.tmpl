@@ -2,7 +2,7 @@
 <html lang="en">
   {{ template "head" .}}
 
-  <body class="dark fill-screen flex-col middle-align" hx-ext="ws">
+  <body class="dark middle-align" hx-ext="ws">
     <header class="max responsive">
       <nav>
         <i> 3p </i>
@@ -46,10 +46,7 @@
       </nav>
     </header>
 
-    <main
-      id="chat-messages"
-      class="flex-grow large-width space scroller"
-    ></main>
+    <main id="chat-messages" class="large-width space"></main>
 
     <footer class="responsive middle-align transparent">
       <article class="top-round large-width surface-container">
