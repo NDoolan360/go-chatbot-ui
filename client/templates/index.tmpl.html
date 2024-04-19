@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  {{ template "head" .}}
+
+  <body class="dark fill-screen flex-col middle-align" hx-ext="ws">
+    <header class="max responsive">
+      <nav>
+        <i> 3p </i>
+        <h5>{{ .Title }}</h5>
+        <span class="max"></span>
+        <div
+          class="chip"
+          ws-connect="/web-socket"
+          _="on htmx:wsConnecting remove @hidden from #status-loading
+               then add @hidden to #status-message
+             on htmx:wsOpen put 'Connected' into #status-message
+               then remove @hidden from #status-message
+               then add @hidden to #status-loading
+             on htmx:wsClose put 'Disconnected' into #status-message
+               then remove @hidden from #status-message
+               then add @hidden to #status-loading
+               then toggle .error on me until htmx:wsConnecting"
+        >
+          <progress
+            id="status-loading"
+            hidden
+            class="circle small"
+            style="border-color: var(--on-surface-variant)"
+          ></progress>
+          <span id="status-message"></span>
+        </div>
+        <button
+          class="circle transparent"
+          _="on click remove <#chat-messages  */>"
+        >
+          <i>delete_sweep</i>
+          <div class="tooltip bottom">Delete Messages</div>
+        </button>
+        <button
+          class="circle transparent"
+          _="on click toggle .dark on body then toggle @hidden on .theme-icon"
+        >
+          <i class="theme-icon"> dark_mode </i>
+          <i class="theme-icon" hidden> light_mode </i>
+        </button>
+      </nav>
+    </header>
+
+    <main
+      id="chat-messages"
+      class="flex-grow large-width space scroller"
+    ></main>
+
+    <footer class="responsive middle-align transparent">
+      <article class="top-round large-width surface-container">
+        <form id="input-form">
+          <nav class="no-space">
+            <div class="max field border left-round surface-container-lowest">
+              <textarea
+                type="text"
+                name="message"
+                placeholder="Send a message..."
+                _="on keydown(shiftKey)[key is 'Enter']
+                     if #send matches @disabled
+                       halt the event's default
+                     else if shiftKey is false
+                       halt the event's default then trigger click on #send"
+              ></textarea>
+            </div>
+            <button
+              id="send"
+              class="large circle right-round"
+              ws-connect="/web-socket"
+              ws-send
+              type="submit"
+              _="on click toggle @hidden on .send-icon
+                 on click toggle @disabled on me
+                 on htmx:wsAfterMessage[message contains 'smart_toy'] toggle @hidden on .send-icon then toggle @disabled on me
+                 on htmx:wsBeforeSend reset() the #input-form"
+            >
+              <i class="send-icon">send</i>
+              <progress
+                hidden
+                class="send-icon circle small"
+                style="border-color: var(--on-primary)"
+              ></progress>
+              <div class="tooltip top">Send</div>
+            </button>
+            <span class="space"></span>
+            <span class="chip circle large">
+              <i class="medium">psychology</i>
+              <div class="tooltip top">
+                Generative AI systems are known to hallucinate information</br >
+                that is not factually correct. Please check the contents</br >
+                of the response before using the information presented.</br >
+              </div>
+            </span>
+          </nav>
+        </form>
+      </article>
+    </footer>
+  </body>
+</html>
