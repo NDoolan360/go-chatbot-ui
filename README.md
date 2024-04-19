@@ -30,11 +30,11 @@ go run go-chatbot-ui.go
 
 ## Extertnal Components
 
-- [Htmx](/client/public/scripts/htmx.min.js) - [Big Sky Software][htmx]
-- [Htmx Websockets](/client/public/scripts/htmx.ws.min.js) - [Big Sky Software][htmx-ws]
-- [Hyperscript](/client/public/scripts/hyperscript.min.js) - [Big Sky Software][hyperscript]
-- [Beer CSS](/client/public/scripts/beercss.min.js) - [Beer CSS][beer-css]
-- [md-block](/client/public/scripts/md-block.min.js) - [Lea Verou][beer-css]
+- [Htmx][htmx] - Big Sky Software
+- [Htmx Websockets][htmx-ws] - Big Sky Software
+- [Hyperscript][hyperscript] - Big Sky Software
+- [Beer CSS][beer-css] - Beer CSS
+- [md-block][md-block] - Lea Verou
 
 [brew-install-go]: https://formulae.brew.sh/formula/go
 [go-website]: https://go.dev/doc/install
