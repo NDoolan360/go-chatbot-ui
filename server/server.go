@@ -16,7 +16,7 @@ type Payload struct {
 	Headers map[string]interface{} `json:"HEADERS"`
 }
 
-// ChatMessageTemplate represents the data structure for the chat-message.tmpl.html template.
+// ChatMessageTemplate represents the data structure for the chat-message.html.tmpl template.
 type ChatMessageTemplate struct {
 	Message     string
 	MessageIcon string
@@ -64,7 +64,7 @@ func HandleWebSocket(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Load template for repsonses
-		chatMessageTemplate := template.Must(template.ParseFiles("server/templates/chat-message.tmpl.html"))
+		chatMessageTemplate := template.Must(template.ParseFiles("server/templates/chat-message.html.tmpl"))
 
 		// Render question to message list
 		var questionBuffer bytes.Buffer

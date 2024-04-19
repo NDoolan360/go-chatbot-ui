@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-// IndexTemplate represents the data structure for the index.tmpl.html template.
+// IndexTemplate represents the data structure for the index.html.tmpl template.
 type IndexTemplate struct {
 	Title       string
 	Description string
@@ -14,8 +14,8 @@ type IndexTemplate struct {
 // GetIndex handles the request for rendering the index page.
 func GetIndex(w http.ResponseWriter, r *http.Request) {
 	indexTemplate := template.Must(template.ParseFiles(
-		"client/templates/index.tmpl.html",
-		"client/templates/head.tmpl.html",
+		"client/templates/index.html.tmpl",
+		"client/templates/head.html.tmpl",
 	))
 
 	err := indexTemplate.Execute(w, IndexTemplate{
