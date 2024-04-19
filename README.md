@@ -1,5 +1,7 @@
 # Go Chatbot UI
 
+![screenshot of the Chatbot UI](./screenshot.png)
+
 ## Purpose
 
 This project was completed as a part of a firebreak week I participated in at Kaluza. 🔥
